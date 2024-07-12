@@ -1,13 +1,19 @@
 package bobfootlen;
 
+import java.util.Scanner;
+
 /**
- * Hello world!
+ *        what
  *
  */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        try (var scanner = new Scanner(System.in)) {
+            System.out.println( "what is your name?" );
+            var input = scanner.nextLine();
+            System.out.printf("hi %s %n how are you",input);
+        }
     }
 }
