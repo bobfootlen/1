@@ -1,3 +1,4 @@
+package bobfootlen;
 import java.util.Scanner;
 
 public class AddNumbers {
