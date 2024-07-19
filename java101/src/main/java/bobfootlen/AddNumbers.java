@@ -1,25 +1,27 @@
 package bobfootlen;
+
 import java.util.Scanner;
 
 public class AddNumbers {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        double sum = 0;
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                // Prompt user for the first number
+                System.out.print("Enter number: ");
+                var number = scanner.nextDouble();
 
-        // Prompt user for the first number
-        System.out.print("Enter first number: ");
-        int firstNumber = scanner.nextInt();
+                // Add the two numbers
+                sum = number + sum;
+            }
 
-        // Prompt user for the second number
-        System.out.print("Enter second number: ");
-        int secondNumber = scanner.nextInt();
-
-        // Add the two numbers
-        int sum = firstNumber + secondNumber;
-
-        // Display the result
+            // Display the result
+            
+            //scanner.close();
+        }catch (Exception e) {
+            // TODO: handle exception
+        }
         System.out.println("The sum is: " + sum);
-
-        // Close the scanner
-        scanner.close();
+        
     }
 }
