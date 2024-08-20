@@ -20,10 +20,10 @@ public class Journal {
                 options = new OpenOption[0];
             }
             var lines = new ArrayList<String>();
-            System.out.println("Enter more lines below (q alone to quit): ");
+            System.out.println("Enter more lines below (@ alone to quit): ");
             while(true){
                 var line = scanner.nextLine();
-                if("q".equals(line)){
+                if("@".equals(line)){
                     break;
                 }
                 lines.add(line);
