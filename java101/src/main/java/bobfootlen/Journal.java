@@ -13,17 +13,17 @@ public class Journal {
         var filename = "SomeSillyFile.txt";
         OpenOption[] options;
         try (var scanner = new Scanner(System.in)) {
-            if(Files.exists(Path.of(filename))){
-                Files.readAllLines(Path.of(filename)).stream().forEach((line)->System.out.println(line));
-                options = new OpenOption[]{StandardOpenOption.APPEND};
-            }else{
+            if (Files.exists(Path.of(filename))) {
+                Files.readAllLines(Path.of(filename)).stream().forEach((line) -> System.out.println(line));
+                options = new OpenOption[] { StandardOpenOption.APPEND };
+            } else {
                 options = new OpenOption[0];
             }
             var lines = new ArrayList<String>();
             System.out.println("Enter more lines below (@ alone to quit): ");
-            while(true){
+            while (true) {
                 var line = scanner.nextLine();
-                if("@".equals(line)){
+                if ("@".equals(line)) {
                     break;
                 }
                 lines.add(line);
@@ -31,7 +31,7 @@ public class Journal {
             Files.write(Path.of(filename), lines, options);
             System.out.println("Journal entry recorded.");
         } catch (IOException e) {
-            System.err.println("Unable to access file: "+filename);
+            System.err.println("Unable to access file: " + filename);
             System.err.println(e.getMessage());
         }
     }
