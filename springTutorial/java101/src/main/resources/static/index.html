@@ -107,6 +107,7 @@
             <button class="btn" data-value="0">0</button>
             <button class="btn" data-value=".">.</button>
             <button class="btn" data-value="+">+</button>
+            <button class="btn" data-value="=">=</button>
             <button class="btn" data-value="C" id="clear">C</button>
         </div>
     </div>
@@ -131,11 +132,18 @@
                     if (value) {
                         if (value === 'C') {
                             display.textContent = '0';
+                            numbers = 0;
                             return;
                         } 
                         if (value === '+') {
-                            numbers += display.textContent
-                            
+                            numbers += Number(display.textContent);
+                            display.textContent = '0';
+                            return;
+                        }
+                        if (value === '=') {
+                            numbers += Number(display.textContent);
+                            display.textContent = numbers;
+                            return;
                         }
 
 
