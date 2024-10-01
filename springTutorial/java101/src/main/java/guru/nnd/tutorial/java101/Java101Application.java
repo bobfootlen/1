@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Java101Application {
 
-	@RequestMapping("/add")
+	@GetMapping("/add")
 	public String add(@RequestParam("operands") double[] operands) {
 		double value = 0;
 		for (var operand : operands) {
@@ -17,7 +17,7 @@ public class Java101Application {
 		return String.valueOf(value);
 	}
 
-	@RequestMapping("/helloWorld")
+	@GetMapping("/helloWorld")
 	public String home() {
 		return "Hello Docker World";
 	}
