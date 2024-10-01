@@ -121,7 +121,14 @@
     </div>
 
     <script>
-        var numbers = 0;
+        var numbers = [];
+        async function getsum(){
+            let baseurl = '/add';
+            let querystring = numbers.map(number => `operands=${encodeURIComponent(number)}`).join('&');
+            let fullurl = `${baseurl}?${querystring}`;  
+            let response = await fetch(fullurl);
+            display.textContent = response.body;
+        }
         document.addEventListener('DOMContentLoaded', () => {
             const display = document.getElementById('display');
             const buttons = document.querySelectorAll('.btn');
@@ -132,17 +139,17 @@
                     if (value) {
                         if (value === 'C') {
                             display.textContent = '0';
-                            numbers = 0;
+                            numbers = [];
                             return;
                         } 
                         if (value === '+') {
-                            numbers += Number(display.textContent);
+                            numbers.push (Number(display.textContent)) ;
                             display.textContent = '0';
                             return;
                         }
                         if (value === '=') {
-                            numbers += Number(display.textContent);
-                            display.textContent = numbers;
+                            numbers.push (Number(display.textContent)); 
+                            getsum();
                             return;
                         }
 
