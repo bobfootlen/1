@@ -127,7 +127,7 @@
             let querystring = numbers.map(number => `operands=${encodeURIComponent(number)}`).join('&');
             let fullurl = `${baseurl}?${querystring}`;  
             let response = await fetch(fullurl);
-            display.textContent = response.body;
+            display.textContent = await response.text();
         }
         document.addEventListener('DOMContentLoaded', () => {
             const display = document.getElementById('display');
