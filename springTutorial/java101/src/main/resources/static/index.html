@@ -108,6 +108,7 @@
             <button class="btn" data-value=".">.</button>
             <button class="btn" data-value="+">+</button>
             <button class="btn" data-value="=">=</button>
+            <button class="btn" data-value="-">-</button>
             <button class="btn" data-value="C" id="clear">C</button>
         </div>
     </div>
@@ -150,6 +151,11 @@
                         if (value === '=') {
                             numbers.push (Number(display.textContent)); 
                             getsum();
+                            return;
+                        }
+                        if (value === '-') {
+                            numbers.push (Number(display.textContent)) ;
+                            display.textContent = '0';
                             return;
                         }
 

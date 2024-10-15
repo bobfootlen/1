@@ -13,6 +13,7 @@ public class Java101Application {
 		double value = 0;
 		for (var operand : operands) {
 			value += operand;
+			System.out.println("adding "+ operand);
 		}
 		return String.valueOf(value);
 	}
