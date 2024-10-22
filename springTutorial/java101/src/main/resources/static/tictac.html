@@ -2,11 +2,53 @@
 <html lang="en">
 
 <head>
+    <style>
+
+        .cells {
+
+            body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        
+            display:grid;
+            grid-template-columns: repeat(
+                3,1fr
+            );
+        }
+
+        .cells {
+            font-size: 2.5;
+            padding: 10px;
+            border: none;
+            border-radius: 0px;
+            background-color: #1e81ae;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+
+    </style>
     <title>tic tac toe</title>
 </head>
 
 <body>
-
+<div class ="cells">
+    <button>X</button>
+    <button>O</button>
+    <button>X</button>
+    <button>O</button>
+    <button>X</button>
+    <button>O</button>
+    <button>X</button>
+    <button>O</button>
+    <button>X</button>
+</div>
 </body>
 
 </html>
