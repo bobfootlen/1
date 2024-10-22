@@ -8,6 +8,30 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Java101Application {
 
+	@GetMapping("/tictac/bord")
+	public String getbord(){
+		return bordToString(bord);
+	}
+	@PostMapping("/tictac/bord")
+	public String recordmove(){
+
+		return getbord();
+	}
+	
+private String bordToString(char[][] bord){
+	StringBuilder builder = new StringBuilder(9);
+	builder.append(bord[0]);
+	builder.append(bord[1]);
+	builder.append(bord[2]);
+	return builder.toString();
+}
+	private char[][] bord = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+
+	private char currentPlayer ='x';
+
+    
+
+
 	@GetMapping("/add")
 	public String add(@RequestParam("operands") double[] operands) {
 		double value = 0;
