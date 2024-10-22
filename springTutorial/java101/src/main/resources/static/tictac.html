@@ -6,7 +6,13 @@
 
         .cells {
 
-            body {
+            display:grid;
+            grid-template-columns: repeat(
+                3,1fr
+            );
+        }
+        
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -14,12 +20,6 @@
             margin: 0;
             background-color: #f4f4f4;
             font-family: Arial, sans-serif;
-        }
-        
-            display:grid;
-            grid-template-columns: repeat(
-                3,1fr
-            );
         }
 
         .cells {
