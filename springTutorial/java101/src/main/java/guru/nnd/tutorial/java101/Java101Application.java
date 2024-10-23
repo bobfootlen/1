@@ -1,5 +1,7 @@
 package guru.nnd.tutorial.java101;
 
+import java.security.InvalidParameterException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +15,25 @@ public class Java101Application {
 		return bordToString(bord);
 	}
 	@PostMapping("/tictac/bord")
-	public String recordmove(){
-
+	public String recordmove(int column, int row){
+		if(column > 2 || column < 0 || row > 2 || row < 0){
+			throw new InvalidParameterException("Row or Column Out of Bounds");
+		}
+		if(bord[row][column] != ' '){
+			throw new InvalidParameterException("Space Already Occupied");
+		}
+		bord[row][column] = currentPlayer;
+		currentPlayer = currentPlayer == 'x' ? 'o' : 'x';
 		return getbord();
 	}
 	
 private String bordToString(char[][] bord){
-	StringBuilder builder = new StringBuilder(9);
+	StringBuilder builder = new StringBuilder(11);
+	builder.append('"');
 	builder.append(bord[0]);
 	builder.append(bord[1]);
 	builder.append(bord[2]);
+	builder.append('"');
 	return builder.toString();
 }
 	private char[][] bord = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
