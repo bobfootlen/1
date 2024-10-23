@@ -20,14 +20,14 @@ public class Java101Application {
 	@PostMapping("/tictac/bord")
 	public ResponseEntity<String> recordmove(int column, int row) {
 		if (column > 2 || column < 0 || row > 2 || row < 0) {
-			return new ResponseEntity("Row or Column Out of Bounds", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Row or Column Out of Bounds", HttpStatus.BAD_REQUEST);
 		}
 		if (bord[row][column] != ' ') {
 			return new ResponseEntity<>("Space Already Occupied", HttpStatus.BAD_REQUEST);
 		}
 		bord[row][column] = currentPlayer;
 		currentPlayer = currentPlayer == 'x' ? 'o' : 'x';
-		return new ResponseEntity<>(getbord());
+		return new ResponseEntity<>(getbord(),HttpStatus.OK);
 	}
 
 	@GetMapping("/tictac/player")
