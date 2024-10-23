@@ -4,6 +4,8 @@ import java.security.InvalidParameterException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
@@ -11,44 +13,48 @@ import org.springframework.web.bind.annotation.*;
 public class Java101Application {
 
 	@GetMapping("/tictac/bord")
-	public String getbord(){
+	public String getbord() {
 		return bordToString(bord);
 	}
+
 	@PostMapping("/tictac/bord")
-	public String recordmove(int column, int row){
-		if(column > 2 || column < 0 || row > 2 || row < 0){
-			throw new InvalidParameterException("Row or Column Out of Bounds");
+	public ResponseEntity<String> recordmove(int column, int row) {
+		if (column > 2 || column < 0 || row > 2 || row < 0) {
+			return new ResponseEntity("Row or Column Out of Bounds", HttpStatus.BAD_REQUEST);
 		}
-		if(bord[row][column] != ' '){
-			throw new InvalidParameterException("Space Already Occupied");
+		if (bord[row][column] != ' ') {
+			return new ResponseEntity<>("Space Already Occupied", HttpStatus.BAD_REQUEST);
 		}
 		bord[row][column] = currentPlayer;
 		currentPlayer = currentPlayer == 'x' ? 'o' : 'x';
-		return getbord();
+		return new ResponseEntity<>(getbord());
 	}
-	
-private String bordToString(char[][] bord){
-	StringBuilder builder = new StringBuilder(11);
-	builder.append('"');
-	builder.append(bord[0]);
-	builder.append(bord[1]);
-	builder.append(bord[2]);
-	builder.append('"');
-	return builder.toString();
-}
-	private char[][] bord = {{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
 
-	private char currentPlayer ='x';
+	@GetMapping("/tictac/player")
+	public String getPlayer() {
+		return "\"" + currentPlayer + "\"";
+	}
 
-    
+	private String bordToString(char[][] bord) {
+		StringBuilder builder = new StringBuilder(11);
+		builder.append('"');
+		builder.append(bord[0]);
+		builder.append(bord[1]);
+		builder.append(bord[2]);
+		builder.append('"');
+		return builder.toString();
+	}
 
+	private char[][] bord = { { ' ', ' ', ' ' }, { ' ', ' ', ' ' }, { ' ', ' ', ' ' } };
+
+	private char currentPlayer = 'x';
 
 	@GetMapping("/add")
 	public String add(@RequestParam("operands") double[] operands) {
 		double value = 0;
 		for (var operand : operands) {
 			value += operand;
-			System.out.println("adding "+ operand);
+			System.out.println("adding " + operand);
 		}
 		return String.valueOf(value);
 	}
