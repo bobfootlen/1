@@ -1,5 +1,7 @@
 package guru.nnd.tutorial.java101;
 
-public class TTTsockethandler {
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+public class TTTsockethandler extends TextWebSocketHandler {
     
 }
