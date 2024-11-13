@@ -1,7 +1,5 @@
 package guru.nnd.tutorial.java101;
 
-import java.security.InvalidParameterException;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
