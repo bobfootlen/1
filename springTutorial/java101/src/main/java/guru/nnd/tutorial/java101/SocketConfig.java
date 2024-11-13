@@ -13,6 +13,7 @@ public class SocketConfig implements WebSocketConfigurer{
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         
         registry.addHandler(new PlayerHandler(), "/player-connect");
+        registry.addHandler(new TicTacSocketHandler(), "/tic tac-connect");
         
     }
 
