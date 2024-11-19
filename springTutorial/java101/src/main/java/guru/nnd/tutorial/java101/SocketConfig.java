@@ -7,14 +7,14 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
-public class SocketConfig implements WebSocketConfigurer{
+public class SocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        
+
         registry.addHandler(new PlayerHandler(), "/player-connect");
         registry.addHandler(new TicTacSocketHandler(), "/tic tac-connect");
-        
+
     }
 
 }
