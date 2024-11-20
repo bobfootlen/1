@@ -16,16 +16,16 @@ public class Java101Application {
 	}
 
 	@PutMapping("/tictac/bord")
-	public String resetbord(){
-		for(var i =0; i < 3; i++) {
-			for (var j = 0; j < 3; j++){
+	public String resetbord() {
+		for (var i = 0; i < 3; i++) {
+			for (var j = 0; j < 3; j++) {
 				bord[i][j] = '\u00a0';
 			}
 		}
 
 		return getbord();
 	}
-	
+
 	@PostMapping("/tictac/bord")
 	public ResponseEntity<String> recordmove(String player, int column, int row) {
 		if(currentPlayer != player.charAt(0)){
