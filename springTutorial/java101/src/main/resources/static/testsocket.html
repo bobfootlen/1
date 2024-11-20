@@ -8,7 +8,9 @@
     <script>
         // Use the relative path for the WebSocket connection
         const socket = new WebSocket(`${window.location.protocol.replace('http', 'ws')}//${window.location.host}/player-connect`);
-
+        socket.onmessage = (event) => {
+            console.log("Received message: ",event.data);
+        }
     </script>
 </body>
 
