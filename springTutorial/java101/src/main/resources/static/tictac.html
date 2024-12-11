@@ -10,13 +10,17 @@
         }
 
         body {
-            display: flex;
+            display: block;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
             font-family: Arial, sans-serif;
+        }
+
+        .gamebord {
+            display: flex;
         }
 
         .cells {
@@ -28,23 +32,34 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
+        .cells button {
+            min-height: 60px;
+            min-width: 60px;
+            font-size: 40px;
+        }
     </style>
     <title>tic tac toe</title>
 </head>
 
 <body>
-    <h1>Current Player: <div id="activeplayer"></div></h1>
-    <h2>You are: <div id="clientrole"></div></h2>
-    <div class="cells">
-        <button id="square00" onclick="makeMove(0, 0)"></button>
-        <button id="square01" onclick="makeMove(0, 1)"></button>
-        <button id="square02" onclick="makeMove(0, 2)"></button>
-        <button id="square10" onclick="makeMove(1, 0)"></button>
-        <button id="square11" onclick="makeMove(1, 1)"></button>
-        <button id="square12" onclick="makeMove(1, 2)"></button>
-        <button id="square20" onclick="makeMove(2, 0)"></button>
-        <button id="square21" onclick="makeMove(2, 1)"></button>
-        <button id="square22" onclick="makeMove(2, 2)"></button>
+    <h1>Current Player: <div id="activeplayer"></div>
+    </h1>
+    <h2>You are: <div id="clientrole"></div>
+    </h2>
+    <div class="gamebord">
+
+        <div class="cells">
+            <button id="square00" onclick="makeMove(0, 0)">x</button>
+            <button id="square01" onclick="makeMove(0, 1)">o</button>
+            <button id="square02" onclick="makeMove(0, 2)"></button>
+            <button id="square10" onclick="makeMove(1, 0)"></button>
+            <button id="square11" onclick="makeMove(1, 1)"></button>
+            <button id="square12" onclick="makeMove(1, 2)"></button>
+            <button id="square20" onclick="makeMove(2, 0)"></button>
+            <button id="square21" onclick="makeMove(2, 1)"></button>
+            <button id="square22" onclick="makeMove(2, 2)"></button>
+        </div>
     </div>
     <script>
         // Poll the API every 2 seconds
@@ -92,7 +107,7 @@
         // Use the relative path for the WebSocket connection
         const socket = new WebSocket(`${window.location.protocol.replace('http', 'ws')}//${window.location.host}/player-connect`);
         socket.onmessage = (event) => {
-            console.log("Received message: ",event.data);
+            console.log("Received message: ", event.data);
             player = event.data.split(":")[1]
             document.getElementById("clientrole").textContent = player;
         }
