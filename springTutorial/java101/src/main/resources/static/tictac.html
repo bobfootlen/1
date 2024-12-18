@@ -47,6 +47,9 @@
     </h1>
     <h2>You are: <div id="clientrole"></div>
     </h2>
+
+<button onclick="reset()">reset</button>
+
     <div class="gamebord">
 
         <div class="cells">
@@ -101,6 +104,12 @@
             } catch (error) {
                 console.error('Error making move:', error);
             }
+        }
+
+        async function reset() {
+            const response = await fetch(`/tictac/bord`, {
+                    method: 'PUT',
+                });
         }
 
         var player = "none";
