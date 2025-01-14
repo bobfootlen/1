@@ -19,7 +19,7 @@
             font-family: Arial, sans-serif;
         }
 
-        .gamebord {
+        .gameboard {
             display: flex;
         }
 
@@ -50,7 +50,7 @@
 
 <button onclick="reset()">reset</button>
 
-    <div class="gamebord">
+    <div class="gameboard">
 
         <div class="cells">
             <button id="square00" onclick="makeMove(0, 0)">x</button>
@@ -75,7 +75,7 @@
                 document.getElementById('activeplayer').textContent = playerResponse;
 
                 // Fetch the board state
-                const response = await fetch('/tictac/bord');
+                const response = await fetch('/tictac/board');
                 if (!response.ok) throw new Error('Network response was not ok');
                 const board = await response.text();
 
@@ -94,7 +94,7 @@
         // Function to make a move when a button is clicked
         async function makeMove(row, col) {
             try {
-                const response = await fetch(`/tictac/bord?player=${player}&row=${row}&column=${col}`, {
+                const response = await fetch(`/tictac/board?player=${player}&row=${row}&column=${col}`, {
                     method: 'POST',
                 });
 
@@ -107,7 +107,7 @@
         }
 
         async function reset() {
-            const response = await fetch(`/tictac/bord`, {
+            const response = await fetch(`/tictac/board`, {
                     method: 'PUT',
                 });
         }

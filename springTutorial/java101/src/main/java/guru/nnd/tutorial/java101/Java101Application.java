@@ -10,23 +10,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Java101Application {
 
-	@GetMapping("/tictac/bord")
-	public String getbord() {
-		return bordToString(bord);
+	@GetMapping("/tictac/board")
+	public String getboard() {
+		return boardToString(board);
 	}
 
-	@PutMapping("/tictac/bord")
-	public String resetbord() {
+	@PutMapping("/tictac/board")
+	public String resetboard() {
 		for (var i = 0; i < 3; i++) {
 			for (var j = 0; j < 3; j++) {
-				bord[i][j] = ' ';
+				board[i][j] = ' ';
 			}
 		}
-
-		return getbord();
+		if(' '==currentPlayer){
+			currentPlayer = Math.floor(Math.random()*100) % 2 == 1 ? 'x':'o';
+		}
+		return getboard();
 	}
 
-	@PostMapping("/tictac/bord")
+	@PostMapping("/tictac/board")
 	public ResponseEntity<String> recordmove(String player, int column, int row) {
 		if (currentPlayer != player.charAt(0)) {
 			return new ResponseEntity<>("It's not your turn.", HttpStatus.BAD_REQUEST);
@@ -34,10 +36,10 @@ public class Java101Application {
 		if (column > 2 || column < 0 || row > 2 || row < 0) {
 			return new ResponseEntity<>("Row or Column Out of Bounds", HttpStatus.BAD_REQUEST);
 		}
-		if (bord[row][column] != ' ') {
+		if (board[row][column] != ' ') {
 			return new ResponseEntity<>("Space Already Occupied", HttpStatus.BAD_REQUEST);
 		}
-		bord[row][column] = currentPlayer;
+		board[row][column] = currentPlayer;
 		var endgame = checkEndGame();
 		if (endgame == null)
 			currentPlayer = currentPlayer == 'x' ? 'o' : 'x';
@@ -45,26 +47,26 @@ public class Java101Application {
 			System.out.println(endgame);
 			currentPlayer = ' ';
 		}
-		return new ResponseEntity<>(getbord(), HttpStatus.OK);
+		return new ResponseEntity<>(getboard(), HttpStatus.OK);
 	}
 
 	private String checkEndGame() {
 
 		for (var i = 0; i < 3; i++) {
 
-			if (checkSet(bord[i][0], bord[i][1], bord[i][2]))
-				return "" + bord[i][0] + " Wins";
+			if (checkSet(board[i][0], board[i][1], board[i][2]))
+				return "" + board[i][0] + " Wins";
 		}
 		for (var i = 0; i < 3; i++) {
 
-			if (checkSet(bord[0][i], bord[1][i], bord[2][i]))
-				return "" + bord[0][i] + " Wins";
+			if (checkSet(board[0][i], board[1][i], board[2][i]))
+				return "" + board[0][i] + " Wins";
 		}
-		if (checkSet(bord[0][0], bord[1][1], bord[2][2]))
-			return "" + bord[0][0] + " Wins";
-		if (checkSet(bord[2][0], bord[1][1], bord[0][2]))
-			return "" + bord[2][0] + " Wins";
-		if (getbord().contains(" "))
+		if (checkSet(board[0][0], board[1][1], board[2][2]))
+			return "" + board[0][0] + " Wins";
+		if (checkSet(board[2][0], board[1][1], board[0][2]))
+			return "" + board[2][0] + " Wins";
+		if (getboard().contains(" "))
 			return null;
 		else
 			return "Cat's Game!";
@@ -79,17 +81,17 @@ public class Java101Application {
 		return "\"" + currentPlayer + "\"";
 	}
 
-	private String bordToString(char[][] bord) {
+	private String boardToString(char[][] board) {
 		StringBuilder builder = new StringBuilder(11);
 		builder.append('"');
-		builder.append(bord[0]);
-		builder.append(bord[1]);
-		builder.append(bord[2]);
+		builder.append(board[0]);
+		builder.append(board[1]);
+		builder.append(board[2]);
 		builder.append('"');
 		return builder.toString();
 	}
 
-	private char[][] bord = {
+	private char[][] board = {
 			{ ' ', ' ', ' ' },
 			{ ' ', ' ', ' ' },
 			{ ' ', ' ', ' ' }
