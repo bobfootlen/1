@@ -14,7 +14,7 @@ public class PlayerHandler extends TextWebSocketHandler {
 
     private List<WebSocketSession> clients = new ArrayList<>();
 
-    private Map<WebSocketSession,String> players = new HashMap<>();
+    private Map<WebSocketSession, String> players = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -31,20 +31,24 @@ public class PlayerHandler extends TextWebSocketHandler {
         super.handleTextMessage(session, message);
         var payload = message.getPayload();
         var messageType = payload.substring(0, payload.indexOf(":"));
-        switch(messageType){
+        var messageData = payload.substring(payload.indexOf(":")+1);
+        switch (messageType) {
+            case "sample":
+                // handle "Sample" message type
+                System.out.println("Handle Sample");
+                break;
             default:
-            session.sendMessage(new TextMessage("error:Unhandled Message Type."));
+                session.sendMessage(new TextMessage("error:Unhandled Message Type."));
         }
     }
 
-
     private String assignRole(WebSocketSession session) {
-        if(!players.containsValue("x")){
+        if (!players.containsValue("x")) {
             players.put(session, "x");
-        }else if(!players.containsValue("o")){
-            players.put(session,"o");
-        }else{
-            players.put(session,"spectator");
+        } else if (!players.containsValue("o")) {
+            players.put(session, "o");
+        } else {
+            players.put(session, "spectator");
         }
         return players.get(session);
     }

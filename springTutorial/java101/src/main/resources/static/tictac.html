@@ -91,26 +91,6 @@
             }
         }, 2000); // Poll every 2 seconds
 
-        // Function to make a move when a button is clicked
-        async function makeMove(row, col) {
-            try {
-                const response = await fetch(`/tictac/board?player=${player}&row=${row}&column=${col}`, {
-                    method: 'POST',
-                });
-
-                if (!response.ok) throw new Error('Failed to make move');
-
-                console.log(`Move made at row ${row}, column ${col}`);
-            } catch (error) {
-                console.error('Error making move:', error);
-            }
-        }
-
-        async function reset() {
-            const response = await fetch(`/tictac/board`, {
-                    method: 'PUT',
-                });
-        }
 
         var player = "none";
         // Use the relative path for the WebSocket connection
@@ -128,7 +108,30 @@
             }
         }
 
-        socket.send("useless:Broken Stuff.");
+
+
+        // Function to make a move when a button is clicked
+        async function makeMove(row, col) {
+            try {
+                const response = await fetch(`/tictac/board?player=${player}&row=${row}&column=${col}`, {
+                    method: 'POST',
+                });
+
+                if (!response.ok) throw new Error('Failed to make move');
+                socket.send(`move:${row},${col}`)
+                console.log(`Move made at row ${row}, column ${col}`);
+            } catch (error) {
+                console.error('Error making move:', error);
+            }
+        }
+
+        async function reset() {
+            const response = await fetch(`/tictac/board`, {
+                    method: 'PUT',
+                });
+        }
+
+        
     </script>
 </body>
 
