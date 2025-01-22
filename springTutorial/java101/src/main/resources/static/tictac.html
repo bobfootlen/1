@@ -116,10 +116,19 @@
         // Use the relative path for the WebSocket connection
         const socket = new WebSocket(`${window.location.protocol.replace('http', 'ws')}//${window.location.host}/player-connect`);
         socket.onmessage = (event) => {
+            const [context, value] = event.data.split(":");
+
             console.log("Received message: ", event.data);
-            player = event.data.split(":")[1]
-            document.getElementById("clientrole").textContent = player;
+            if(context === "role"){
+                player = event.data.split(":")[1]
+                document.getElementById("clientrole").textContent = player;
+            }
+            if(context === "error"){
+                alert(value);
+            }
         }
+
+        socket.send("useless:Broken Stuff.");
     </script>
 </body>
 

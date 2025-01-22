@@ -25,10 +25,23 @@ public class PlayerHandler extends TextWebSocketHandler {
         session.sendMessage(new TextMessage("role:" + role));
     }
 
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        // TODO Auto-generated method stub
+        super.handleTextMessage(session, message);
+        var payload = message.getPayload();
+        var messageType = payload.substring(0, payload.indexOf(":"));
+        switch(messageType){
+            default:
+            session.sendMessage(new TextMessage("error:Unhandled Message Type."));
+        }
+    }
+
+
     private String assignRole(WebSocketSession session) {
         if(!players.containsValue("x")){
             players.put(session, "x");
-        }else if(!players.containsValue("o"){
+        }else if(!players.containsValue("o")){
             players.put(session,"o");
         }else{
             players.put(session,"spectator");
