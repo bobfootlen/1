@@ -14,6 +14,19 @@ public class PlayerHandler extends TextWebSocketHandler {
 
     private List<WebSocketSession> clients = new ArrayList<>();
 
+    private class GameState {
+        private char[][] board = {
+			{ ' ', ' ', ' ' },
+			{ ' ', ' ', ' ' },
+			{ ' ', ' ', ' ' }
+	};
+
+    private char currentPlayer = 'x';
+
+    private String winState;
+
+    }
+
     private Map<WebSocketSession, String> players = new HashMap<>();
 
     @Override
@@ -31,7 +44,7 @@ public class PlayerHandler extends TextWebSocketHandler {
         super.handleTextMessage(session, message);
         var payload = message.getPayload();
         String messageType = payload.substring(0, payload.indexOf(":"));
-        var messageData = payload.substring(payload.indexOf(":")+1);
+        var messageData = payload.substring(payload.indexOf(":") + 1);
         switch (messageType) {
             case "sample":
                 // handle "Sample" message type
