@@ -30,7 +30,7 @@ public class PlayerHandler extends TextWebSocketHandler {
         // TODO Auto-generated method stub
         super.handleTextMessage(session, message);
         var payload = message.getPayload();
-        var messageType = payload.substring(0, payload.indexOf(":"));
+        String messageType = payload.substring(0, payload.indexOf(":"));
         var messageData = payload.substring(payload.indexOf(":")+1);
         switch (messageType) {
             case "sample":
