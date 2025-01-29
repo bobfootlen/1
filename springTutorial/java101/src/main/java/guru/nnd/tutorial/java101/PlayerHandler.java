@@ -32,6 +32,7 @@ public class PlayerHandler extends TextWebSocketHandler {
 
     }
 
+    private GameState gameState;
     private Map<WebSocketSession, String> players = new HashMap<>();
 
     @Override
@@ -41,6 +42,11 @@ public class PlayerHandler extends TextWebSocketHandler {
 
         // Send role to the client
         session.sendMessage(new TextMessage("role:" + role));
+        for (var client : clients) {
+            client.sendMessage(new TextMessage(
+                    "state:" + new ObjectMapper()
+                            .writeValueAsString(gameState)));
+        }
     }
 
     @Override
