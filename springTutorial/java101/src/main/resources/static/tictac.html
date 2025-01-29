@@ -48,7 +48,7 @@
     <h2>You are: <div id="clientrole"></div>
     </h2>
 
-<button onclick="reset()">reset</button>
+    <button onclick="reset()">reset</button>
 
     <div class="gameboard">
 
@@ -96,15 +96,25 @@
         // Use the relative path for the WebSocket connection
         const socket = new WebSocket(`${window.location.protocol.replace('http', 'ws')}//${window.location.host}/player-connect`);
         socket.onmessage = (event) => {
-            const [context, value] = event.data.split(":");
+            const colonIndex = event.data.indexOf(":");
+            const context = event.data.substring(0, colonIndex)
+            const value = event.data.substring(colonIndex + 1);
 
             console.log("Received message: ", event.data);
-            if(context === "role"){
-                player = event.data.split(":")[1]
-                document.getElementById("clientrole").textContent = player;
-            }
-            if(context === "error"){
-                alert(value);
+            switch (context) {
+                case "role": {
+                    player = event.data.split(":")[1]
+                    document.getElementById("clientrole").textContent = player;
+                }
+                    break;
+                case "error": {
+                    alert(value);
+                }
+                    break;
+                case "state":
+                    const gameState = JSON.parse(value);
+                    console.log(gameState);
+                    break;
             }
         }
 
@@ -127,11 +137,11 @@
 
         async function reset() {
             const response = await fetch(`/tictac/board`, {
-                    method: 'PUT',
-                });
+                method: 'PUT',
+            });
         }
 
-        
+
     </script>
 </body>
 
