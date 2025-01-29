@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,15 +16,19 @@ public class PlayerHandler extends TextWebSocketHandler {
     private List<WebSocketSession> clients = new ArrayList<>();
 
     private class GameState {
+
+        @JsonProperty("board")
         private char[][] board = {
-			{ ' ', ' ', ' ' },
-			{ ' ', ' ', ' ' },
-			{ ' ', ' ', ' ' }
-	};
+                { ' ', ' ', ' ' },
+                { ' ', ' ', ' ' },
+                { ' ', ' ', ' ' }
+        };
 
-    private char currentPlayer = 'x';
+        @JsonProperty("activePlayer")
+        private char currentPlayer = 'x';
 
-    private String winState;
+        @JsonProperty("winState")
+        private String winState;
 
     }
 
