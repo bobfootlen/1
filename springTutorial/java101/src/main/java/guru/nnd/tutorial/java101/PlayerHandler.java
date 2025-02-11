@@ -33,7 +33,7 @@ public class PlayerHandler extends TextWebSocketHandler {
 
     }
 
-    private GameState gameState;
+    private GameState gameState = new GameState();
     private Map<WebSocketSession, String> players = new HashMap<>();
 
     @Override
