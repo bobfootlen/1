@@ -84,6 +84,18 @@ public class PlayerHandler extends TextWebSocketHandler {
         }
     }
 
+    public void resetboard() throws JsonProcessingException, IOException {
+		for (var i = 0; i < 3; i++) {
+			for (var j = 0; j < 3; j++) {
+				gameState.board[i][j] = ' ';
+			}
+		}
+		if(' '==gameState.currentPlayer){
+			gameState.currentPlayer = Math.floor(Math.random()*100) % 2 == 1 ? 'x':'o';
+		}
+        sendState();
+	}
+
     
     private class MoveRequest{
         @JsonProperty
