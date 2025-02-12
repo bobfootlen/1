@@ -66,6 +66,7 @@
     </div>
     <script>
         // Poll the API every 2 seconds
+        /*
         setInterval(async function () {
             try {
                 // Fetch active player
@@ -90,7 +91,7 @@
                 console.error('Error fetching board:', error);
             }
         }, 2000); // Poll every 2 seconds
-
+*/
 
         var player = "none";
         // Use the relative path for the WebSocket connection
@@ -113,7 +114,17 @@
                     break;
                 case "state":
                     const gameState = JSON.parse(value);
+                    document.getElementById('activeplayer').textContent = gameState.activePlayer;
                     console.log(gameState);
+                    const board = gameState.board;
+
+                // Update the buttons based on the board state
+                for (let i = 0; i < 9; i++) {
+                    const row = Math.floor(i / 3);
+                    const col = i % 3;
+                    const button = document.getElementById(`square${row}${col}`);
+                    button.textContent = board[i + 1] || ''; // Default to empty if undefined
+                }
                     break;
             }
         }
