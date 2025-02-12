@@ -118,13 +118,13 @@
                     console.log(gameState);
                     const board = gameState.board;
 
-                // Update the buttons based on the board state
-                for (let i = 0; i < 9; i++) {
-                    const row = Math.floor(i / 3);
-                    const col = i % 3;
-                    const button = document.getElementById(`square${row}${col}`);
-                    button.textContent = board[i + 1] || ''; // Default to empty if undefined
-                }
+                    // Update the buttons based on the board state
+                    for (let i = 0; i < 9; i++) {
+                        const row = Math.floor(i / 3);
+                        const col = i % 3;
+                        const button = document.getElementById(`square${row}${col}`);
+                        button.textContent = board[i + 1] || ''; // Default to empty if undefined
+                    }
                     break;
             }
         }

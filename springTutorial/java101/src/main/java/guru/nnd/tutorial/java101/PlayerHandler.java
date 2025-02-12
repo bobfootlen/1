@@ -85,84 +85,86 @@ public class PlayerHandler extends TextWebSocketHandler {
     }
 
     public void resetboard() throws JsonProcessingException, IOException {
-		for (var i = 0; i < 3; i++) {
-			for (var j = 0; j < 3; j++) {
-				gameState.board[i][j] = ' ';
-			}
-		}
-		if(' '==gameState.currentPlayer){
-			gameState.currentPlayer = Math.floor(Math.random()*100) % 2 == 1 ? 'x':'o';
-		}
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                gameState.board[i][j] = ' ';
+            }
+        }
+        if (' ' == gameState.currentPlayer) {
+            gameState.currentPlayer = Math.floor(Math.random() * 100) % 2 == 1 ? 'x' : 'o';
+        }
         sendState();
-	}
+    }
 
-    
-    private class MoveRequest{
+    private class MoveRequest {
         @JsonProperty
         private int row;
         @JsonProperty
         private int column;
     }
 
-    private void handlemove(WebSocketSession session, String payload) throws IOException{
+    private void handlemove(WebSocketSession session, String payload) throws IOException {
         if (gameState.currentPlayer != players.get(session).charAt(0)) {
-			session.sendMessage(new TextMessage("error:Not your turn!"));
+            session.sendMessage(new TextMessage("error:Not your turn!"));
             return;
-		}
+        }
         var request = OBJECT_MAPPER.readValue(payload, MoveRequest.class);
-		if (request.column > 2 || request.column < 0 || request.row > 2 || request.row < 0) {
+        if (request.column > 2 || request.column < 0 || request.row > 2 || request.row < 0) {
             session.sendMessage(new TextMessage("error:Row or Column Out of Bounds"));
-			return;
-		}
-		if (gameState.board[request.row][request.column] != ' ') {
+            return;
+        }
+        if (gameState.board[request.row][request.column] != ' ') {
             session.sendMessage(new TextMessage("error:Space Already Occupied"));
-			return;
-		}
+            return;
+        }
         gameState.board[request.row][request.column] = gameState.currentPlayer;
-		var endgame = checkEndGame();
-		if (endgame == null)
+        var endgame = checkEndGame();
+        if (endgame == null)
             gameState.currentPlayer = gameState.currentPlayer == 'x' ? 'o' : 'x';
-		else {
+        else {
             gameState.winState = endgame;
-			
-			gameState.currentPlayer = ' ';
-		}
+
+            gameState.currentPlayer = ' ';
+        }
         sendState();
     }
+
     private String checkEndGame() {
-var board = gameState.board;
-		for (var i = 0; i < 3; i++) {
+        var board = gameState.board;
+        for (var i = 0; i < 3; i++) {
 
-			if (checkSet(board[i][0], board[i][1], board[i][2]))
-				return "" + board[i][0] + " Wins";
-		}
-		for (var i = 0; i < 3; i++) {
+            if (checkSet(board[i][0], board[i][1], board[i][2]))
+                return "" + board[i][0] + " Wins";
+        }
+        for (var i = 0; i < 3; i++) {
 
-			if (checkSet(board[0][i], board[1][i], board[2][i]))
-				return "" + board[0][i] + " Wins";
-		}
-		if (checkSet(board[0][0], board[1][1], board[2][2]))
-			return "" + board[0][0] + " Wins";
-		if (checkSet(board[2][0], board[1][1], board[0][2]))
-			return "" + board[2][0] + " Wins";
-		if (boardToString(board).contains(" "))
-			return null;
-		else
-			return "Cat's Game!";
-	}
+            if (checkSet(board[0][i], board[1][i], board[2][i]))
+                return "" + board[0][i] + " Wins";
+        }
+        if (checkSet(board[0][0], board[1][1], board[2][2]))
+            return "" + board[0][0] + " Wins";
+        if (checkSet(board[2][0], board[1][1], board[0][2]))
+            return "" + board[2][0] + " Wins";
+        if (boardToString(board).contains(" "))
+            return null;
+        else
+            return "Cat's Game!";
+    }
 
     private boolean checkSet(char c1, char c2, char c3) {
-		return c1 != ' ' && c1 == c2 && c1 == c3;
-	}
+        return c1 != ' ' && c1 == c2 && c1 == c3;
+    }
+
     private String boardToString(char[][] board) {
-		StringBuilder builder = new StringBuilder(11);
-		builder.append('"');
-		builder.append(board[0]);
-		builder.append(board[1]);
-		builder.append(board[2]);
-		builder.append('"');
-		return builder.toString();
-	}
+        StringBuilder builder = new StringBuilder(11);
+        builder.append('"');
+        builder.append(board[0]);
+        builder.append(board[1]);
+        builder.append(board[2]);
+        builder.append('"');
+        return builder.toString();
+    }
+
     private String assignRole(WebSocketSession session) {
         if (!players.containsValue("x")) {
             players.put(session, "x");
