@@ -96,7 +96,7 @@ public class PlayerHandler extends TextWebSocketHandler {
         sendState();
     }
 
-    private class MoveRequest {
+    private static class MoveRequest {
         @JsonProperty
         private int row;
         @JsonProperty
