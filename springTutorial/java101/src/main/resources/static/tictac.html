@@ -134,12 +134,7 @@
         // Function to make a move when a button is clicked
         async function makeMove(row, col) {
             try {
-                const response = await fetch(`/tictac/board?player=${player}&row=${row}&column=${col}`, {
-                    method: 'POST',
-                });
-
-                if (!response.ok) throw new Error('Failed to make move');
-                socket.send(`move:${row},${col}`)
+                socket.send(`move:{"row":${row},"column":${col}}`)
                 console.log(`Move made at row ${row}, column ${col}`);
             } catch (error) {
                 console.error('Error making move:', error);
