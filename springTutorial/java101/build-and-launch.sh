@@ -27,3 +27,5 @@ echo "Starting a new container from the latest image..."
 docker run -d --name $CONTAINER_NAME -p 8080:8080 ndd/tutorial
 
 echo "Deployment complete. Application running on port 8080."
+
+read -n 1 -s -r -p "Press any key to continue..."
