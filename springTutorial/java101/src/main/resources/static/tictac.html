@@ -123,7 +123,7 @@
                         const row = Math.floor(i / 3);
                         const col = i % 3;
                         const button = document.getElementById(`square${row}${col}`);
-                        button.textContent = board[i + 1] || ''; // Default to empty if undefined
+                        button.textContent = board[row][col] || ''; // Default to empty if undefined
                     }
                     break;
             }
