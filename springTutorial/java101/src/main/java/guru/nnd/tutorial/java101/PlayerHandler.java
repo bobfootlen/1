@@ -76,7 +76,7 @@ public class PlayerHandler extends TextWebSocketHandler {
                 handlemove(session, messageData);
                 break;
             case "restart":
-            resetboard();
+                resetboard();
                 // handle "Sample" message type
                 System.out.println("Handle Sample");
                 break;
@@ -93,6 +93,9 @@ public class PlayerHandler extends TextWebSocketHandler {
         }
         if (' ' == gameState.currentPlayer) {
             gameState.currentPlayer = Math.floor(Math.random() * 100) % 2 == 1 ? 'x' : 'o';
+        }
+        if (gameState.winState != null) {
+            gameState.winState = null;
         }
         sendState();
     }

@@ -23,6 +23,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
         }
+
         /*body {
             display: block;
             justify-content: center;
@@ -61,6 +62,8 @@
     </h1>
     <h2>You are: <div id="clientrole"></div>
     </h2>
+
+    <div id="winstate"></div>
 
     <button onclick="reset()">reset</button>
 
@@ -130,7 +133,12 @@
                     const gameState = JSON.parse(value);
                     document.getElementById('activeplayer').textContent = gameState.activePlayer;
                     console.log(gameState);
-                    const board = gameState.board;
+                    const board = gameState.board
+                    if (gameState.winState == null) {
+                        document.getElementById('winstate').textContent = '';
+                    } else {
+                        document.getElementById('winstate').textContent = gameState.winState;
+                    }
 
                     // Update the buttons based on the board state
                     for (let i = 0; i < 9; i++) {
