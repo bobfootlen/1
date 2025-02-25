@@ -10,6 +10,20 @@
         }
 
         body {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .gameboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        /*body {
             display: block;
             justify-content: center;
             align-items: center;
@@ -31,7 +45,7 @@
             background-color: #1e81ae;
             cursor: pointer;
             transition: background-color 0.3s;
-        }
+        }*/
 
         .cells button {
             min-height: 60px;
@@ -142,10 +156,9 @@
         }
 
         async function reset() {
-            const response = await fetch(`/tictac/board`, {
-                method: 'PUT',
-            });
+            socket.send('restart:');
         }
+
 
 
     </script>

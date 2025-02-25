@@ -76,6 +76,7 @@ public class PlayerHandler extends TextWebSocketHandler {
                 handlemove(session, messageData);
                 break;
             case "restart":
+            resetboard();
                 // handle "Sample" message type
                 System.out.println("Handle Sample");
                 break;
